@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './HallOfFame.css'
 
@@ -19,6 +20,17 @@ const HallOfFame = ({entries}) => (
 )
 
 export default HallOfFame
+
+HallOfFame.propTypes = {
+    entries : PropTypes.arrayOf(
+        PropTypes.shape({
+            date: PropTypes.string.isRequired,
+            guesses: PropTypes.number.isRequired,
+            id: PropTypes.number.isRequired,
+            player: PropTypes.string.isRequired
+        })
+    )
+}
 
 // == Internal helpers ==============================================
 

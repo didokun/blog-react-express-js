@@ -7,8 +7,9 @@ import HallOfFame, {FAKE_HOF} from  './components/hallframe/HallOfFame'
 
 
 class App extends Component {
-  handleCardClick(card) {
-    console.log(card);
+  // Arrow fx for binding
+  handleCardClick = (card) => {
+    console.log(card, this);
   }
   render() {
     const won = new Date().getSeconds() % 2 === 0
