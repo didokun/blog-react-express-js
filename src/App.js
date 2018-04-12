@@ -4,8 +4,9 @@ import './App.css';
 import {Card} from './components/card/Card'
 import _ from 'lodash'
 
-import HallOfFame, {FAKE_HOF} from  './components/hallframe/HallOfFame'
+import HallOfFame from  './components/hallframe/HallOfFame'
 import GuessCount from  './components/GuessCount/GuessCount'
+import HighScoreInput from  './components/form/HighScoreInput'
 
 
 const SIDE = 2
@@ -15,10 +16,11 @@ const VISUAL_PAUSE_MSECS = 750
 
 class App extends Component {
   state = {
-    cards : this.generateCards(),
+    cards: this.generateCards(),
     currentPair: [],
     guesses: 0,
-    matchedCardIndices: []
+    hallOfFame: null,
+    matchedCardIndices: [],
   } 
 
 
@@ -31,6 +33,11 @@ class App extends Component {
       result.push(card, card)
     }
     return _.shuffle(result)
+  }
+
+  // Arrow fx for binding
+  displayHallOfFame = (hallOfFame) => {
+    this.setState({ hallOfFame })
   }
 
   // Arrow fx for binding
@@ -76,7 +83,7 @@ class App extends Component {
   }
 
   render() {
-    const {cards, matchedCardIndices, guesses} = this.state
+    const { cards, guesses, hallOfFame, matchedCardIndices } = this.state
     const won = matchedCardIndices.length === cards.length
     return (
       <div className="App">
@@ -101,7 +108,14 @@ class App extends Component {
             />
           ))}
         </div>
-        <h1>{won && <HallOfFame entries={FAKE_HOF} /> }</h1>
+        {
+          won &&
+            (hallOfFame ? (
+              <HallOfFame entries={hallOfFame} />
+            ) : (
+              <HighScoreInput guesses={guesses} onStored={this.displayHallOfFame} />
+            ))
+        }
       </div>
     );
   }
